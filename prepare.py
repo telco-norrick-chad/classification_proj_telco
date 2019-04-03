@@ -61,6 +61,17 @@ def online_svc_combine(df):
     df['online_security_backup'] = df.online_security_encode + df.online_backup_encode
     return df
 
+
+def household_combine(df):
+    tdf = df.copy()
+    tdf.dependents.replace('No','0', inplace=True)
+    tdf.dependents.replace('Yes','1', inplace=True)
+    tdf.partner.replace('Yes','2', inplace=True)
+    tdf.partner.replace('No','0', inplace=True)
+
+    df['household_type_id'] = tdf.partner.astype('int') + tdf.dependents.astype('int')
+    return df
+
 def prep_telco(df):
     return df.pipe(encode_churn)\
     .pipe(multiple_lines_encode)\
@@ -69,4 +80,5 @@ def prep_telco(df):
     .pipe(streaming_combine)\
     .pipe(online_security_encode)\
     .pipe(online_backup_encode)\
-    .pipe(online_svc_combine)
+    .pipe(online_svc_combine)\
+    .pipe(household_combine)

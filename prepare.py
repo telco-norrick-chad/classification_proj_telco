@@ -61,15 +61,26 @@ def online_svc_combine(df):
     df['online_security_backup'] = df.online_security_encode + df.online_backup_encode
     return df
 
-
 def household_combine(df):
     tdf = df.copy()
     tdf.dependents.replace('No','0', inplace=True)
     tdf.dependents.replace('Yes','1', inplace=True)
     tdf.partner.replace('Yes','2', inplace=True)
     tdf.partner.replace('No','0', inplace=True)
-
     df['household_type_id'] = tdf.partner.astype('int') + tdf.dependents.astype('int')
+    return df
+
+def internet_type_id_encode(df):
+    tdf = df.copy()
+    tdf.internet_service_type_id.replace(3,0, inplace = True)
+    df.internet_service_type_id = tdf.internet_service_type_id
+    return df
+
+def gender_encode(df):
+    tdf = df.copy()
+    tdf.gender.replace('Female', '0',inplace = True)
+    tdf.gender.replace('Male', '1',inplace = True)
+    df['gender_encode'] = tdf.gender.astype('int')
     return df
 
 def prep_telco(df):
@@ -81,4 +92,9 @@ def prep_telco(df):
     .pipe(online_security_encode)\
     .pipe(online_backup_encode)\
     .pipe(online_svc_combine)\
-    .pipe(household_combine)
+    .pipe(household_combine)\
+    .pipe(internet_type_id_encode)\
+    .pipe(gender_encode)
+
+
+

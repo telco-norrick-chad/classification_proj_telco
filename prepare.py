@@ -6,10 +6,11 @@ from sklearn.preprocessing import MinMaxScaler
 
 
 def drop_blank_charge(df):
-    df2 = df[df['total_charges'] != ' ']
+    df2 = df.copy()
+    df2 = df2[df2['total_charges'] != ' ']
     df2['total_charges'] = df2.total_charges.astype(float)
     return df2
-    
+
 def encode_churn(df):
     encoder = LabelEncoder()
     encoder.fit(df.churn)
@@ -89,17 +90,29 @@ def gender_encode(df):
     df['gender_encode'] = tdf.gender.astype('int')
     return df
 
-def scale_total_charges(df):
+def scale_total_charges(df1,df2):
 
-    return 0
+    scaler = MinMaxScaler()
+    scaler.fit(df1[['total_charges']])
+    df1['total_charges_scaled'] = scaler.transform(df1[['total_charges']])
+    df2['total_charges_scaled'] = scaler.transform(df2[['total_charges']])
 
-def scale_monthly_charges(df):
+    return [df1,df2]
 
-    return 0
+def scale_monthly_charges(df1,df2):
+
+    scaler = MinMaxScaler()
+    scaler.fit(df1[['monthly_charges']])
+    df1['monthly_charges_scaled'] = scaler.transform(df1['monthly_charges'])
+    df2['monthly_charges_scaled'] = scaler.transform(df2['monthly_charges'])
+
+    return [df1,df2]
 
 def scale_split_data(df1,df2):
 
-    return [0,0]
+    df1,df2 = scale_monthly_charges(df1,df2)
+    df1,df2 = scale_total_charges(df1,df2)
+    return [df1,df2]
 
 def prep_telco(df):
     return df.pipe(drop_blank_charge)\

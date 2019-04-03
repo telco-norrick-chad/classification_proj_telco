@@ -120,6 +120,7 @@ def scale_split_data(df1,df2):
 
 def prep_telco(df):
     return df.pipe(drop_blank_charge)\
+    .pipe(tenure_yearly)\
     .pipe(encode_churn)\
     .pipe(multiple_lines_encode)\
     .pipe(streaming_movies_encode)\

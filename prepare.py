@@ -90,6 +90,29 @@ def gender_encode(df):
     df['gender_encode'] = tdf.gender.astype('int')
     return df
 
+def paperless_billing_encode(df):
+    tdf = df.copy()
+    tdf.paperless_billing.replace('No', '0',inplace = True)
+    tdf.paperless_billing.replace('Yes', '1',inplace = True)
+    df['paperless_billing_encode'] = tdf.paperless_billing.astype('int')
+    return df
+
+def tech_support_encode(df):
+    tdf = df.copy()
+    tdf['tech_support'].replace('No internet service', '0', inplace = True)
+    tdf['tech_support'].replace('No', '1', inplace = True)
+    tdf['tech_support'].replace('Yes','2', inplace=True)
+    df['tech_support_encode'] = tdf.tech_support.astype('int')
+    return df
+
+def device_protection_encode(df):
+    tdf = df.copy()
+    tdf['device_protection'].replace('No internet service', '0', inplace = True)
+    tdf['device_protection'].replace('No', '1', inplace = True)
+    tdf['device_protection'].replace('Yes','2', inplace=True)
+    df['device_protection_encode'] = tdf.device_protection.astype('int')
+    return df
+
 def scale_total_charges(df1,df2):
 
     a = df1.copy()
@@ -131,4 +154,7 @@ def prep_telco(df):
     .pipe(online_svc_combine)\
     .pipe(household_combine)\
     .pipe(internet_type_id_encode)\
-    .pipe(gender_encode)
+    .pipe(gender_encode)\
+    .pipe(paperless_billing_encode)\
+    .pipe(tech_support_encode)\
+    .pipe(device_protection_encode)

@@ -41,25 +41,32 @@ def streaming_combine(df):
     df['streaming_services'] = df.tv_encode + df.movies_encode
     return df
 
-# def encode_streaming_tv(df):
-#     tdf = df.copy()
-#     tdf['streaming_tv'].replace('No internet service', '0', inplace = True)
-#     tdf['streaming_tv'].replace('No', '1', inplace = True)
-#     tdf['streaming_tv'].replace('Yes', '2', inplace = True)
-#     df['streaming_encode']=tdf.streaming_tv.astype('int')
-#     return df
+def online_security_encode(df):
+    tdf = df.copy()
+    tdf['online_security'].replace('No internet service', '0', inplace = True)
+    tdf['online_security'].replace('No', '0', inplace = True)
+    tdf['online_security'].replace('Yes', '1', inplace = True)
+    df['online_security_encode'] = tdf.online_security.astype('int')
+    return df
 
-# def encode_streaming_movies(df):
-#     tdf = df.copy()
-#     tdf['streaming_movies'].replace('No internet service', '0', inplace = True)
-#     tdf['streaming_movies'].replace('No', '1', inplace = True)
-#     tdf['streaming_movies'].replace('Yes', '2', inplace = True)
-#     df['streaming_movies_encode']=tdf.streaming_tv.astype('int')
-#     return df
+def online_backup_encode(df):
+    tdf = df.copy()
+    tdf['online_backup'].replace('No internet service', '0', inplace = True)
+    tdf['online_backup'].replace('No', '0', inplace = True)
+    tdf['online_backup'].replace('Yes', '1', inplace = True)
+    df['online_backup_encode'] = tdf.online_backup.astype('int')
+    return df
+
+def online_svc_combine(df):
+    df['online_security_backup'] = df.online_security_encode + df.online_backup_encode
+    return df
 
 def prep_telco(df):
     return df.pipe(encode_churn)\
     .pipe(multiple_lines_encode)\
     .pipe(streaming_movies_encode)\
     .pipe(streaming_tv_encode)\
-    .pipe(streaming_combine)
+    .pipe(streaming_combine)\
+    .pipe(online_security_encode)\
+    .pipe(online_backup_encode)\
+    .pipe(online_svc_combine)

@@ -92,27 +92,31 @@ def gender_encode(df):
 
 def scale_total_charges(df1,df2):
 
+    a = df1.copy()
+    b = df2.copy()
     scaler = MinMaxScaler()
-    scaler.fit(df1[['total_charges']])
-    df1['total_charges_scaled'] = scaler.transform(df1[['total_charges']])
-    df2['total_charges_scaled'] = scaler.transform(df2[['total_charges']])
+    scaler.fit(a[['total_charges']])
+    a['total_charges_scaled'] = scaler.transform(a[['total_charges']])
+    b['total_charges_scaled'] = scaler.transform(b[['total_charges']])
 
     return [df1,df2]
 
 def scale_monthly_charges(df1,df2):
-
+    a = df1.copy()
+    b = df2.copy()
     scaler = MinMaxScaler()
-    scaler.fit(df1[['monthly_charges']])
-    df1['monthly_charges_scaled'] = scaler.transform(df1['monthly_charges'])
-    df2['monthly_charges_scaled'] = scaler.transform(df2['monthly_charges'])
+    scaler.fit(a[['monthly_charges']])
+    a['monthly_charges_scaled'] = scaler.transform(a['monthly_charges'])
+    b['monthly_charges_scaled'] = scaler.transform(b['monthly_charges'])
 
     return [df1,df2]
 
 def scale_split_data(df1,df2):
-
-    df1,df2 = scale_monthly_charges(df1,df2)
-    df1,df2 = scale_total_charges(df1,df2)
-    return [df1,df2]
+    a = df1.copy()
+    b = df2.copy()
+    a,b = scale_monthly_charges(a,b)
+    a,b = scale_total_charges(a,b)
+    return [a,b]
 
 def prep_telco(df):
     return df.pipe(drop_blank_charge)\

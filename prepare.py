@@ -4,6 +4,10 @@ import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import MinMaxScaler
 
+
+def drop_blank_charge(df): 
+    return df[df['total_charges'] != ' ']
+
 def encode_churn(df):
     encoder = LabelEncoder()
     encoder.fit(df.churn)
@@ -84,7 +88,8 @@ def gender_encode(df):
     return df
 
 def prep_telco(df):
-    return df.pipe(encode_churn)\
+    return df.pipe(drop_blank_charge)\
+    .pipe(encode_churn)\
     .pipe(multiple_lines_encode)\
     .pipe(streaming_movies_encode)\
     .pipe(streaming_tv_encode)\

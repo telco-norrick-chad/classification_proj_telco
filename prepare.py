@@ -32,6 +32,15 @@ def encode_churn(df):
 def tenure_yearly(df):
     df[['tenure_yearly']] = df[['tenure']]//12
     return df    
+    return df
+
+def multiple_lines_encode(df):
+    tdf = df.copy()
+    tdf['multiple_lines'].replace('No phone service', '0', inplace = True)
+    tdf['multiple_lines'].replace('No', '1', inplace = True)
+    tdf['multiple_lines'].replace('Yes','2', inplace=True)
+    tdf['multiple_lines']=tdf.multiple_lines.astype('int')
+    return tdf 
 
 def prep_telco(df):
     return df.pipe(encode_churn)

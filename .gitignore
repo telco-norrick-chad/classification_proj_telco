@@ -1,5 +1,5 @@
 *.csv
 .DS_Store
 .ipynb_checkpoints
-__pycache__
+__pycache__/*
 Data_Cleaning.ipynb

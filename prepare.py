@@ -113,6 +113,10 @@ def device_protection_encode(df):
     df['device_protection_encode'] = tdf.device_protection.astype('int')
     return df
 
+def df_value_counts(df):
+    for c in df.columns:
+        return df[c].value_counts()
+
 def scale_total_charges(df1,df2):
 
     a = df1.copy()

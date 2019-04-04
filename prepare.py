@@ -40,7 +40,7 @@ def streaming_tv_encode(df):
     tdf = df.copy()
     tdf['streaming_tv'].replace('No internet service', '0', inplace = True)
     tdf['streaming_tv'].replace('No', '0', inplace = True)
-    tdf['streaming_tv'].replace('Yes','1', inplace=True)
+    tdf['streaming_tv'].replace('Yes','2', inplace=True)
     df['tv_encode'] = tdf.streaming_tv.astype('int')
     return df
 
@@ -60,7 +60,7 @@ def online_backup_encode(df):
     tdf = df.copy()
     tdf['online_backup'].replace('No internet service', '0', inplace = True)
     tdf['online_backup'].replace('No', '0', inplace = True)
-    tdf['online_backup'].replace('Yes', '1', inplace = True)
+    tdf['online_backup'].replace('Yes', '2', inplace = True)
     df['online_backup_encode'] = tdf.online_backup.astype('int')
     return df
 
@@ -71,8 +71,8 @@ def online_svc_combine(df):
 def household_combine(df):
     tdf = df.copy()
     tdf.dependents.replace('No','0', inplace=True)
-    tdf.dependents.replace('Yes','1', inplace=True)
-    tdf.partner.replace('Yes','2', inplace=True)
+    tdf.dependents.replace('Yes','2', inplace=True)
+    tdf.partner.replace('Yes','1', inplace=True)
     tdf.partner.replace('No','0', inplace=True)
     df['household_type_id'] = tdf.partner.astype('int') + tdf.dependents.astype('int')
     return df

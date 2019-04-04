@@ -122,17 +122,17 @@ def scale_total_charges(df1,df2):
     a['total_charges_scaled'] = scaler.transform(a[['total_charges']])
     b['total_charges_scaled'] = scaler.transform(b[['total_charges']])
 
-    return [df1,df2]
+    return [a,b]
 
 def scale_monthly_charges(df1,df2):
     a = df1.copy()
     b = df2.copy()
     scaler = MinMaxScaler()
     scaler.fit(a[['monthly_charges']])
-    a['monthly_charges_scaled'] = scaler.transform(a['monthly_charges'])
-    b['monthly_charges_scaled'] = scaler.transform(b['monthly_charges'])
+    a['monthly_charges_scaled'] = scaler.transform(a[['monthly_charges']])
+    b['monthly_charges_scaled'] = scaler.transform(b[['monthly_charges']])
 
-    return [df1,df2]
+    return [a,b]
 
 def scale_split_data(df1,df2):
     a = df1.copy()

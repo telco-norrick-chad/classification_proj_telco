@@ -23,6 +23,8 @@ README.md
 
 6. Appendix file that addresses all required items, questions, documentation from the project rubric, titled:
 __Appendix.docx
+This file is also located on Google Docs at the following link:
+https://docs.google.com/document/d/e/2PACX-1vSFO5KCsrIS-QXOO_6fcGAf-7P4-lhKKqncC7Bi8Bsb951bA0AE_ie96jRtyg7SUr0EfbrUxAciVsAI/pub
 
 
 Python Script Instructions:
